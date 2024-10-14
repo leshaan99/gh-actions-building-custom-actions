@@ -13,7 +13,7 @@ jobs:
         # Name of the step to get and load dependencies
       - name: Get and load dependencies
         # This uses a custom action located in the repository at the specified path
-        uses: ./.github/actions/cache-dependency/action.yml
+        uses: ./.github/actions/cache-dependency/
       - name: Lint code
         run: npm run lint
   test:
