@@ -14,6 +14,9 @@ jobs:
       - name: Get and load dependencies
         # This uses a custom action located in the repository at the specified path
         uses: ./.github/actions/cache-dependency/
+        with:
+          # Passes 'false' to the 'caching' input, meaning dependency caching will not be used
+          caching: 'false'
       - name: Lint code
         run: npm run lint
   test:
