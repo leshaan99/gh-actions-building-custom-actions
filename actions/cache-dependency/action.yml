@@ -1,0 +1,23 @@
+# The name of the custom action
+name: 'Get and cache dependencies' 
+# A short description of what the action does
+description: 'Get the dependencies and cache them' 
+
+runs:
+  # Specifies that this is a composite action, meaning it runs multiple steps
+  using: 'composite' 
+  steps:
+      # Step to checkout the code
+    - name: Cache dependencies 
+      id: cache
+      uses: actions/cache@v3 
+      with:
+        path: node_modules
+        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }} 
+    
+       # Step to install dependencies
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true' 
+      run: npm ci 
+      # Specifies the shell to use (bash) for running the command
+      shell: bash 
