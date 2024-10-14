@@ -7,6 +7,10 @@ inputs:
     description: 'Dependency cache or not' 
     required: false # This input is optional; it doesn't need to be provided by the user.
     default: 'true' # If the user doesn't provide a value, 'true' will be used by default.
+outputs:
+  used-cache:
+    description: 'If cache is used'
+    value: ${{ steps.install }}
 
 runs:
   # Specifies that this is a composite action, meaning it runs multiple steps
@@ -24,6 +28,7 @@ runs:
     
        # Step to install dependencies
     - name: Install dependencies
+      id: install
       # if the 'caching' input is NOT set to 'true'.
       if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: npm ci 
