@@ -21,15 +21,10 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        # Name of the step to get and load dependencies
+      - name: Get and load dependencies
+        # This uses a custom action located in the repository at the specified path
+        uses: ./.github/actions/cache-dependency/
       - name: Test code
         id: run-tests
         run: npm run test
@@ -45,15 +40,10 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        # Name of the step to get and load dependencies
+      - name: Get and load dependencies
+        # This uses a custom action located in the repository at the specified path
+        uses: ./.github/actions/cache-dependency/
       - name: Build website
         run: npm run build
       - name: Upload artifacts
